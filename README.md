@@ -2,6 +2,7 @@
 
 ![Build Status](https://travis-ci.org/nulldef/stateful.svg?branch=master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/df6e56b8c83a4f90b5a4/test_coverage)](https://codeclimate.com/github/nulldef/stateful/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/nulldef/stateful/badge.svg?branch=master)](https://coveralls.io/github/nulldef/stateful?branch=master)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stateful`. To experiment with that code, run `bin/console` for an interactive prompt.
 
