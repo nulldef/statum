@@ -44,6 +44,7 @@ RSpec.describe Stateful do
   it "raises error when event not exists" do
     expect { car.unknown! }.to raise_error(NoMethodError)
     expect(car).not_to respond_to(:unknown!)
+    expect(car).not_to respond_to(:unknown_method)
   end
 
   it "raises error when 'from state' is not valid" do

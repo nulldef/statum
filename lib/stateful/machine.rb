@@ -1,7 +1,11 @@
 module Stateful
+  # Class for representing event machine
   class Machine
     attr_reader :events, :states, :field
 
+    # Creates machine instance
+    #
+    # @param [Hash] options options hash
     def initialize(options)
       @field   = options.delete(:field)
       @initial = options.delete(:initial)
@@ -9,14 +13,28 @@ module Stateful
       @events  = options.delete(:events)
     end
 
+    # Checks if state present
+    #
+    # @param [String|Symbol] name state name
+    #
+    # @return [Boolean]
     def state?(name)
       @states.include?(name.to_sym)
     end
 
+    # Checks if event present
+    #
+    # @param [String|Boolean] name event name
+    #
+    # @return [Boolean]
     def event?(name)
       @events.keys.include?(name.to_sym)
     end
 
+    # Execute an event
+    #
+    # @param [Object] instance Instance of class, that includes Stateful
+    # @param [String|Symbol] name Event name
     def fire!(instance, name)
       raise Stateful::UnknownEventError, "Event #{name} not found" unless event?(name)
 
