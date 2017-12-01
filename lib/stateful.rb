@@ -39,9 +39,9 @@ module Stateful
 
     def respond_to_missing?(meth, *args)
       if meth.to_s.end_with?('?')
-        state_machine.state?(meth[0..-2])
+        state_machine.state?(meth[0...-1])
       elsif meth.to_s.end_with?('!')
-        state_machine.event?(meth[0..-2])
+        state_machine.event?(meth[0...-1])
       else
         super
       end
