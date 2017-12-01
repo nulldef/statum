@@ -21,6 +21,15 @@ RSpec.describe Stateful do
     expect(car.riding?).to be_falsey
   end
 
+  it "has state methods" do
+    expect(car).to respond_to(:parked?)
+    expect(car).to respond_to(:riding?)
+  end
+
+  it "raises error when state is unknown" do
+    expect { car.unknown? }.to raise_error(NoMethodError)
+  end
+
   it "has event methods" do
     expect(car).to respond_to(:ride!)
     expect(car).to respond_to(:stop!)
@@ -29,5 +38,14 @@ RSpec.describe Stateful do
   it "fires events and changes state" do
     car.ride!
     expect(car.riding?).to be_truthy
+  end
+
+  it "raises error when event not exists" do
+    expect { car.unknown! }.to raise_error(NoMethodError)
+  end
+
+  it "raises error when 'from state' is not valid" do
+    car.state = :riding
+    expect { car.ride! }.to raise_error(Stateful::ErrorTransitionError)
   end
 end
