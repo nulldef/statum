@@ -1,0 +1,12 @@
+engines:
+  rubocop:
+    enabled: true
+    config:
+      file: .rubocop.yml
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
+exclude_paths:
+  - spec/**/*
