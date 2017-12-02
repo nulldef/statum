@@ -1,7 +1,7 @@
 # Statum
 
 ![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master?v=1)
+[![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=1)
 
  Finite state machine for your objects 
 
