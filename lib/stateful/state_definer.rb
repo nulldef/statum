@@ -38,11 +38,14 @@ module Stateful
     # Define a new event
     #
     # @param [String|Symbol] name Event name
-    # @param [Hash] transition_hash Hash were key is 'from' state and value is 'to' state
-    def event(name, transition_hash)
+    # @param [Hash] options Options hash
+    # First key-value pair must be 'from' and 'to' transition states
+    # Other pairs are event options
+    def event(name, options)
       return if @events.key?(name.to_sym)
 
-      @events[name.to_sym] = Stateful::Event.new(*transition_hash.flatten)
+      from, to = options.shift
+      @events[name.to_sym] = Stateful::Event.new(from, to, options)
     end
   end
 end
