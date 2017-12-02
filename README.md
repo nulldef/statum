@@ -49,6 +49,40 @@ car.riding? # => false
 car.ride! # changes idle state to riding
 ```
 
+You can define an array of states which will be able to fire event:
+```ruby
+class Car
+  include Statum
+  
+  attr_accessor :state
+  
+  statum :state, initial: :idle do
+    state :idle
+    state :parked
+    state :riding
+    
+    event :ride, %i[idle parked] => :riding
+  end
+end
+```
+
+Also you can use `any_state` helper to say, that event can be fired from any of defined states
+```ruby
+class Car
+  include Statum
+  
+  attr_accessor :state
+  
+  statum :state, initial: :idle do
+    state :idle
+    state :parked
+    state :riding
+    
+    event :ride, any_state => :riding
+  end
+end
+```
+
 ### Hooks
 You can be able to execute some procs before and after event will be fired
 
