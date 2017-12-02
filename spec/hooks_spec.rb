@@ -1,9 +1,9 @@
 class BeforeCar
-  include Stateful
+  include Statum
 
   attr_accessor :state, :started
 
-  stateful :state, initial: :idle do
+  statum :state, initial: :idle do
     state :idle
     state :driving
 
@@ -12,11 +12,11 @@ class BeforeCar
 end
 
 class AfterCar
-  include Stateful
+  include Statum
 
   attr_accessor :state, :started
 
-  stateful :state, initial: :driving do
+  statum :state, initial: :driving do
     state :idle
     state :driving
 
@@ -25,11 +25,11 @@ class AfterCar
 end
 
 class DelegatedCar
-  include Stateful
+  include Statum
 
   attr_accessor :state, :started
 
-  stateful :state, initial: :idle do
+  statum :state, initial: :idle do
     state :idle
     state :driving
 
@@ -41,7 +41,7 @@ class DelegatedCar
   end
 end
 
-RSpec.describe "Stateful Hooks" do
+RSpec.describe "Statum Hooks" do
   it "runs hooks before event in instance context" do
     car = BeforeCar.new
     expect(car.started).not_to be_truthy

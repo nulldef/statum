@@ -1,9 +1,9 @@
-module Stateful
+module Statum
   # Class for create hash options for machine
   class StateDefiner
     # Creates an instance of definer
     #
-    # @param [Class] klass Class that includes Stateful
+    # @param [Class] klass Class that includes Statum
     # @param [String|Symbol] field Field that will be used for storing current state
     # @param [Hash] options Hash options
     def initialize(klass, field, options)
@@ -18,9 +18,9 @@ module Stateful
 
     # Returns state maching
     #
-    # @return [Stateful::Machine]
+    # @return [Statum::Machine]
     def state_machine
-      Stateful::Machine.new(
+      Statum::Machine.new(
         field:   @field,
         initial: @initial,
         states:  @states,
@@ -45,7 +45,7 @@ module Stateful
       return if @events.key?(name.to_sym)
 
       from, to = options.shift
-      @events[name.to_sym] = Stateful::Event.new(from, to, options)
+      @events[name.to_sym] = Statum::Event.new(from, to, options)
     end
   end
 end

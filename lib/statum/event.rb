@@ -1,4 +1,4 @@
-module Stateful
+module Statum
   # Class for storing event info
   class Event
     attr_reader :from, :to, :before, :after

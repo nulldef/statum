@@ -1,9 +1,9 @@
 class Car
-  include Stateful
+  include Statum
 
   attr_accessor :state
 
-  stateful :state, initial: :parked do
+  statum :state, initial: :parked do
     state :parked
     state :riding
 
@@ -12,7 +12,7 @@ class Car
   end
 end
 
-RSpec.describe Stateful do
+RSpec.describe Statum do
   let(:car) { Car.new }
 
   it "has boolean helper methods" do
@@ -48,6 +48,6 @@ RSpec.describe Stateful do
 
   it "raises error when 'from state' is not valid" do
     car.state = :riding
-    expect { car.ride! }.to raise_error(Stateful::ErrorTransitionError)
+    expect { car.ride! }.to raise_error(Statum::ErrorTransitionError)
   end
 end

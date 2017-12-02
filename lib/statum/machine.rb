@@ -1,4 +1,4 @@
-module Stateful
+module Statum
   # Class for representing event machine
   class Machine
     attr_reader :events, :states, :field
@@ -33,16 +33,16 @@ module Stateful
 
     # Execute an event
     #
-    # @param [Object] instance Instance of class, that includes Stateful
+    # @param [Object] instance Instance of class, that includes Statum
     # @param [String|Symbol] name Event name
     def fire!(instance, name)
-      raise Stateful::UnknownEventError, "Event #{name} not found" unless event?(name)
+      raise Statum::UnknownEventError, "Event #{name} not found" unless event?(name)
 
       current_state = current(instance)
       event         = events[name.to_sym]
 
       if event.from != current_state
-        raise Stateful::ErrorTransitionError, "Cannot transition from #{current_state} to #{event.to}"
+        raise Statum::ErrorTransitionError, "Cannot transition from #{current_state} to #{event.to}"
       end
 
       instance.instance_eval(&event.before) if event.before?

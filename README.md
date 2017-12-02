@@ -1,7 +1,7 @@
-# Stateful
+# Statum
 
-![Build Status](https://travis-ci.org/nulldef/stateful.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/nulldef/stateful/badge.svg?branch=master)](https://coveralls.io/github/nulldef/stateful?branch=master)
+![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master)
 
  Finite state machine for your objects 
 
@@ -10,7 +10,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'stateful'
+gem 'statum'
 ```
 
 And then execute:
@@ -19,20 +19,20 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install stateful
+    $ gem install statum
 
 ## Usage
 
 ### Basic usage
-Stateful provides a DSL for defining state machine for your class
+Statum provides a DSL for defining state machine for your class
 
 ```ruby
 class Car
-  include Stateful
+  include Statum
   
   attr_accessor :state
   
-  stateful :state, initial: :idle do
+  statum :state, initial: :idle do
     state :idle
     state :riding
     
@@ -54,11 +54,11 @@ You can be able to execute some procs before and after event will be fired
 
 ```ruby
 class Car
-  include Stateful
+  include Statum
   
   attr_accessor :state, :started
   
-  stateful :state, initial: :idle do
+  statum :state, initial: :idle do
     state :idle
     state :riding
     
@@ -78,7 +78,7 @@ changing - `after` proc (in instance context).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nulldef/stateful.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nulldef/statum.
 
 ## License
 

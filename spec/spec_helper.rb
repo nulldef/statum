@@ -2,7 +2,7 @@ require "coveralls"
 Coveralls.wear!
 
 require "bundler/setup"
-require "stateful"
+require "statum"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
