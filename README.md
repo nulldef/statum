@@ -1,12 +1,9 @@
 # Stateful
 
 ![Build Status](https://travis-ci.org/nulldef/stateful.svg?branch=master)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/df6e56b8c83a4f90b5a4/test_coverage)](https://codeclimate.com/github/nulldef/stateful/test_coverage)
 [![Coverage Status](https://coveralls.io/repos/github/nulldef/stateful/badge.svg?branch=master)](https://coveralls.io/github/nulldef/stateful?branch=master)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stateful`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+ Finite state machine for your objects 
 
 ## Installation
 
@@ -26,7 +23,54 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic usage
+Stateful provides a DSL for defining state machine for your class
+
+```ruby
+class Car
+  include Stateful
+  
+  attr_accessor :state
+  
+  stateful :state, initial: :idle do
+    state :idle
+    state :riding
+    
+    event :ride, idle: :riding
+  end
+end
+```
+
+Then `Car` object will receive following methods:
+```ruby
+car = Car.new
+car.idle? # => true
+car.riding? # => false
+car.ride! # changes idle state to riding
+```
+
+### Hooks
+You can be able to execute some procs before and after event will be fired
+
+```ruby
+class Car
+  include Stateful
+  
+  attr_accessor :state, :started
+  
+  stateful :state, initial: :idle do
+    state :idle
+    state :riding
+    
+    event :ride, idle: :riding,
+                 before: -> { self.started = true },
+                 after: -> { self.started = false }
+  end
+end
+```
+
+And then before state changes will be executed `before` proc, and after
+changing - `after` proc (in instance context).
 
 ## Development
 
