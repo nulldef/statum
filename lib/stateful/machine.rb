@@ -45,7 +45,9 @@ module Stateful
         raise Stateful::ErrorTransitionError, "Cannot transition from #{current_state} to #{event.to}"
       end
 
+      instance.instance_eval(&event.before) if event.before?
       instance.send("#{field}=", event.to)
+      instance.instance_eval(&event.after) if event.after?
     end
   end
 end
