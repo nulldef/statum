@@ -29,7 +29,7 @@ module Stateful
   module InstanceMethods
     def method_missing(meth, *args)
       if meth.to_s.end_with?('?') && state_machine.state?(meth[0...-1])
-        send(state_machine.field) == meth[0...-1].to_sym
+        state_machine.current(self) == meth[0...-1].to_sym
       elsif meth.to_s.end_with?('!') && state_machine.event?(meth[0...-1])
         state_machine.fire!(self, meth[0...-1])
       else

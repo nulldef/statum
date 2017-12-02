@@ -38,7 +38,7 @@ module Stateful
     def fire!(instance, name)
       raise Stateful::UnknownEventError, "Event #{name} not found" unless event?(name)
 
-      current_state = instance.send(field)&.to_sym || @initial
+      current_state = current(instance)
       event         = events[name.to_sym]
 
       if event.from != current_state
@@ -48,6 +48,15 @@ module Stateful
       instance.instance_eval(&event.before) if event.before?
       instance.send("#{field}=", event.to)
       instance.instance_eval(&event.after) if event.after?
+    end
+
+    # Returns current state of instance
+    #
+    # @param [Object] instance Instance of class
+    #
+    # @return [Symbol] Current instance's state
+    def current(instance)
+      instance.send(field)&.to_sym || @initial
     end
   end
 end

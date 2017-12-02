@@ -64,7 +64,11 @@ class Car
     
     event :ride, idle: :riding,
                  before: -> { self.started = true },
-                 after: -> { self.started = false }
+                 after: :stop_engine
+  end
+  
+  def stop_engine
+    self.started = false
   end
 end
 ```

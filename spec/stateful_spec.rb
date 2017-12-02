@@ -16,7 +16,6 @@ RSpec.describe Stateful do
   let(:car) { Car.new }
 
   it "has boolean helper methods" do
-    car.state = :parked
     expect(car.parked?).to be_truthy
     expect(car.riding?).to be_falsey
   end

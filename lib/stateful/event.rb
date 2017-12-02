@@ -11,8 +11,8 @@ module Stateful
     def initialize(from, to, options = {})
       @from = from
       @to = to
-      @before = options.fetch(:before, nil)
-      @after = options.fetch(:after, nil)
+      @before = options.fetch(:before, nil)&.to_proc
+      @after = options.fetch(:after, nil)&.to_proc
     end
 
     # Check if before hook exists

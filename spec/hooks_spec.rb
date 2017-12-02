@@ -24,6 +24,23 @@ class AfterCar
   end
 end
 
+class DelegatedCar
+  include Stateful
+
+  attr_accessor :state, :started
+
+  stateful :state, initial: :idle do
+    state :idle
+    state :driving
+
+    event :start, idle: :driving, before: :start_engine
+  end
+
+  def start_engine
+    self.started = true
+  end
+end
+
 RSpec.describe "Stateful Hooks" do
   it "runs hooks before event in instance context" do
     car = BeforeCar.new
@@ -39,5 +56,12 @@ RSpec.describe "Stateful Hooks" do
     car.stop!
     expect(car.started).to be_falsey
     expect(car.state).to eq(:idle)
+  end
+
+  it "runs method hook" do
+    car = DelegatedCar.new
+    car.start!
+    expect(car.started).to be_truthy
+    expect(car.state).to eq(:driving)
   end
 end
