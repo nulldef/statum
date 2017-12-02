@@ -12,6 +12,39 @@ class Car
   end
 end
 
+class ArrayCar
+  include Statum
+
+  attr_accessor :state
+
+  statum :state, initial: :parked do
+    state :parked
+    state :idle
+    state :riding
+
+    event :ride, %i[parked idle] => :riding
+  end
+end
+
+class AnyStateCar
+  include Statum
+
+  attr_accessor :state
+
+  def initialize(initial)
+    self.state = initial
+  end
+
+  statum :state, initial: :crashed do
+    state :parked
+    state :idle
+    state :crashed
+    state :riding
+
+    event :ride, any_state => :riding
+  end
+end
+
 RSpec.describe Statum do
   let(:car) { Car.new }
 
@@ -38,6 +71,29 @@ RSpec.describe Statum do
   it "fires events and changes state" do
     car.ride!
     expect(car.riding?).to be_truthy
+  end
+
+  it "fires event from any of states in array" do
+    parked_car       = ArrayCar.new
+    parked_car.state = :parked
+    expect { parked_car.ride! }.to change { parked_car.state }
+    expect(parked_car.state).to eq(:riding)
+
+    idle_car       = ArrayCar.new
+    idle_car.state = :idle
+    expect { idle_car.ride! }.to change { idle_car.state }
+    expect(idle_car.state).to eq(:riding)
+  end
+
+  it "fires event from any of states" do
+    [
+      AnyStateCar.new(:parked),
+      AnyStateCar.new(:crashed),
+      AnyStateCar.new(:idle)
+    ].each do |car|
+      expect { car.ride! }.to change { car.state }
+      expect(car.state).to eq(:riding)
+    end
   end
 
   it "raises error when event not exists" do

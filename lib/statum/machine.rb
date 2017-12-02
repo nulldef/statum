@@ -41,7 +41,7 @@ module Statum
       current_state = current(instance)
       event         = events[name.to_sym]
 
-      if event.from != current_state
+      unless event.can_fire?(current_state)
         raise Statum::ErrorTransitionError, "Cannot transition from #{current_state} to #{event.to}"
       end
 

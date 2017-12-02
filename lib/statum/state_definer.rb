@@ -35,6 +35,13 @@ module Statum
       @states << name.to_sym unless @states.include?(name.to_sym)
     end
 
+    # Returns any state identifier
+    #
+    # @return [Symbol]
+    def any_state
+      :__statum_any_state
+    end
+
     # Define a new event
     #
     # @param [String|Symbol] name Event name
