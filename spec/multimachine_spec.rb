@@ -18,6 +18,17 @@ class MultiCar
   end
 end
 
+class ExistsCar
+  include Statum
+
+  attr_accessor :state, :engine
+
+  statum :state do
+    state :riding
+    state :idle
+  end
+end
+
 RSpec.describe "Statum multimachine" do
   let(:car) { MultiCar.new }
 
@@ -39,5 +50,10 @@ RSpec.describe "Statum multimachine" do
     expect { car.ride! }.to change { car.state }
     expect(car.state).to eq(:riding)
     expect(car.engine).to eq(:started)
+  end
+
+  it "raises error when defining exists machine" do
+    expect { ExistsCar.instance_eval { statum :state } }
+      .to raise_error(Statum::ExistingMachineError)
   end
 end

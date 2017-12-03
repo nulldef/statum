@@ -6,6 +6,7 @@ require "statum/event"
 module Statum
   UnknownEventError    = Class.new(ArgumentError)
   ErrorTransitionError = Class.new(StandardError)
+  ExistingMachineError = Class.new(ArgumentError)
 
   STATE_MACHINES_VARIABLE = '@__statum_machines'.freeze
 
@@ -31,7 +32,7 @@ module Statum
 
     def add_machine(machine)
       if state_machines.any? { |m| m.name == machine.name }
-        raise "State machine for #{machine.name} already exists"
+        raise ExistingMachineError, "State machine for #{machine.name} already exists"
       end
       instance_variable_set(STATE_MACHINES_VARIABLE, state_machines + [machine])
     end
