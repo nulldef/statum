@@ -83,6 +83,38 @@ class Car
 end
 ```
 
+### Multiple state machines
+You can define more than one state machine on your object.
+
+**IMPORTANT** use unique fields to work with two or more states
+```ruby
+class Car
+  include Statum
+
+  attr_accessor :state, :engine
+
+  statum :state do
+    state :riding
+    state :idle
+
+    event :ride, idle: :riding
+  end
+
+  statum :engine do
+    state :stopped
+    state :started
+
+    event :start, stopped: :started
+  end
+end
+```
+
+```ruby
+car = Car.new
+car.start! # changes engine to started
+car.ride! # changes state to riding
+``` 
+
 ### Hooks
 You can be able to execute some procs before and after event will be fired
 
