@@ -3,6 +3,9 @@ module Statum
   class Machine
     attr_reader :events, :states, :field
 
+    # Use state field for name of machine
+    alias name field
+
     # Creates machine instance
     #
     # @param [Hash] options options hash

@@ -7,6 +7,8 @@ module Statum
   UnknownEventError    = Class.new(ArgumentError)
   ErrorTransitionError = Class.new(StandardError)
 
+  STATE_MACHINES_VARIABLE = '@__statum_machines'.freeze
+
   class << self
     def included(base)
       base.extend(Statum::ClassMethods)
@@ -18,20 +20,29 @@ module Statum
     def statum(field, options = {}, &block)
       definer = Statum::StateDefiner.new(self, field, options)
       definer.instance_eval(&block) if block_given?
-      instance_variable_set('@__statum_machine', definer.state_machine)
+      add_machine(definer.state_machine)
     end
 
-    def state_machine
-      instance_variable_get('@__statum_machine')
+    def state_machines
+      instance_variable_get(STATE_MACHINES_VARIABLE) || []
+    end
+
+    private
+
+    def add_machine(machine)
+      if state_machines.any? { |m| m.name == machine.name }
+        raise "State machine for #{machine.name} already exists"
+      end
+      instance_variable_set(STATE_MACHINES_VARIABLE, state_machines + [machine])
     end
   end
 
   module InstanceMethods
     def method_missing(meth, *args)
-      if meth.to_s.end_with?('?') && state_machine.state?(meth[0...-1])
-        state_machine.current(self) == meth[0...-1].to_sym
-      elsif meth.to_s.end_with?('!') && state_machine.event?(meth[0...-1])
-        state_machine.fire!(self, meth[0...-1])
+      if meth.to_s.end_with?('?') && (machine = find_machine_by_state(meth[0...-1]))
+        machine.current(self) == meth[0...-1].to_sym
+      elsif meth.to_s.end_with?('!') && (machine = find_machine_by_event(meth[0...-1]))
+        machine.fire!(self, meth[0...-1])
       else
         super
       end
@@ -39,16 +50,26 @@ module Statum
 
     def respond_to_missing?(meth, *args)
       if meth.to_s.end_with?('?')
-        state_machine.state?(meth[0...-1])
+        !find_machine_by_state(meth[0...-1]).nil?
       elsif meth.to_s.end_with?('!')
-        state_machine.event?(meth[0...-1])
+        !find_machine_by_event(meth[0...-1]).nil?
       else
         super
       end
     end
 
-    def state_machine
-      self.class.state_machine
+    private
+
+    def find_machine_by_event(name)
+      state_machines.select { |machine| machine.event?(name) }.first
+    end
+
+    def find_machine_by_state(name)
+      state_machines.select { |machine| machine.state?(name) }.first
+    end
+
+    def state_machines
+      self.class.state_machines
     end
   end
 end
