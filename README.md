@@ -1,8 +1,8 @@
 # Statum
 
-![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=master)
+[![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=feature%2Fhooks)](https://travis-ci.org/nulldef/statum)
 [![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=0.3.1)
-[![Gem Version](https://badge.fury.io/rb/statum.svg?v=0.3.1)](https://badge.fury.io/rb/statum)
+[![Gem Version](https://badge.fury.io/rb/statum.svg)](https://badge.fury.io/rb/statum)
 
  Finite state machine for your objects 
  
