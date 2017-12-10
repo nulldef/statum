@@ -59,7 +59,8 @@ module Statum
     #
     # @return [Symbol] Current instance's state
     def current(instance)
-      instance.send(field)&.to_sym || @initial
+      value = instance.send(field)
+      value.nil? ? @initial : value.to_sym
     end
   end
 end
