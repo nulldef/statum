@@ -4,6 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=1)
 
  Finite state machine for your objects 
+ 
+Tested on Ruby 2.2.0 +
 
 ## Installation
 
@@ -141,6 +143,14 @@ end
 
 And then before state changes will be executed `before` proc, and after
 changing - `after` proc (in instance context).
+
+If you will wait for argument in hook - the instance will be passed.
+```ruby
+...
+event :ride, idle: :riding, 
+             before: -> (instance) { instance.started = true}
+...
+```
 
 ## Contributing
 
