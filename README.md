@@ -2,6 +2,7 @@
 
 ![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=1)
+[![Gem Version](https://badge.fury.io/rb/statum.svg)](https://badge.fury.io/rb/statum)
 
  Finite state machine for your objects 
  
