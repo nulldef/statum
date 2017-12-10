@@ -48,9 +48,9 @@ module Statum
         raise Statum::ErrorTransitionError, "Cannot transition from #{current_state} to #{event.to}"
       end
 
-      instance.instance_eval(&event.before) if event.before?
+      event.before.evaluate(instance)
       instance.send("#{field}=", event.to)
-      instance.instance_eval(&event.after) if event.after?
+      event.after.evaluate(instance)
     end
 
     # Returns current state of instance
@@ -59,7 +59,8 @@ module Statum
     #
     # @return [Symbol] Current instance's state
     def current(instance)
-      instance.send(field)&.to_sym || @initial
+      value = instance.send(field)
+      value.nil? ? @initial : value.to_sym
     end
   end
 end

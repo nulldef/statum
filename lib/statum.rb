@@ -1,7 +1,8 @@
 require "statum/version"
-require "statum/state_definer"
 require "statum/machine"
+require "statum/hook"
 require "statum/event"
+require "statum/state_definer"
 
 module Statum
   UnknownEventError    = Class.new(ArgumentError)
@@ -9,6 +10,8 @@ module Statum
   ExistingMachineError = Class.new(ArgumentError)
 
   STATE_MACHINES_VARIABLE = '@__statum_machines'.freeze
+
+  ANY_STATE_NAME = :__statum_any_state
 
   class << self
     def included(base)

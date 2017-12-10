@@ -39,7 +39,7 @@ module Statum
     #
     # @return [Symbol]
     def any_state
-      :__statum_any_state
+      Statum::ANY_STATE_NAME
     end
 
     # Define a new event
