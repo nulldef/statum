@@ -1,12 +1,12 @@
 # Statum
 
 ![Build Status](https://travis-ci.org/nulldef/statum.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=1)
-[![Gem Version](https://badge.fury.io/rb/statum.svg)](https://badge.fury.io/rb/statum)
+[![Coverage Status](https://coveralls.io/repos/github/nulldef/statum/badge.svg?branch=master)](https://coveralls.io/github/nulldef/statum?branch=master&v=0.3.1)
+[![Gem Version](https://badge.fury.io/rb/statum.svg?v=0.3.1)](https://badge.fury.io/rb/statum)
 
  Finite state machine for your objects 
  
-Tested on Ruby 2.2.0 +
+Supported Ruby 2.2.0+
 
 - [Installation](#installation)
 - [Usage](#usage)
