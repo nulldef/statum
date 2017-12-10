@@ -7,7 +7,7 @@ class BeforeCar
     state :idle
     state :driving
 
-    event :drive, idle: :driving, before: -> { self.started = true }
+    event :drive, idle: :driving, before: -> (instance) { instance.started = true }
   end
 end
 
@@ -51,7 +51,7 @@ RSpec.describe "Statum Hooks" do
   end
 
   it "runs hooks after event in instance context" do
-    car = AfterCar.new
+    car         = AfterCar.new
     car.started = true
     car.stop!
     expect(car.started).to be_falsey
