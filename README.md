@@ -7,6 +7,14 @@
  
 Tested on Ruby 2.2.0 +
 
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic usage](#basic-usage)
+  - [Multiple state machines](#multiple-state-machines)
+  - [Hooks](#hooks)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
 
 Add this line to your application's Gemfile:
