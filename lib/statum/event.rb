@@ -3,18 +3,18 @@ module Statum
   #
   # @attr [Statum::Hook] before Before hook object
   # @attr [Statum::Hook] after After hook object
-  # @attr [Symbol|Array] from From state name (or names)
+  # @attr [Symbol, Array] from From state name (or names)
   # @attr [Symbol] to To state name
   class Event
     attr_reader :from, :to, :before, :after
 
     # Creates an event class
     #
-    # @param [String|Symbol|Array] from From state name
-    # @param [String|Symbol] to To state name
+    # @param [Symbol, Array<Symbol>] from From state name
+    # @param [Symbol] to To state name
     # @param [Hash] options Options for event
     def initialize(from, to, options = {})
-      @from   = from.is_a?(Array) ? from : from.to_sym
+      @from   = from.is_a?(Array) ? from.map(&:to_sym) : from.to_sym
       @to     = to.to_sym
       @before = Statum::Hook.new(options.fetch(:before, nil))
       @after = Statum::Hook.new(options.fetch(:after, nil))
@@ -22,7 +22,7 @@ module Statum
 
     # Returns true if event can be fired from current state
     #
-    # @param [String|Symbol] current_state Current state
+    # @param [Symbol] current_state Current state
     #
     # @return [Boolean]
     def can_fire?(current_state)

@@ -3,7 +3,7 @@ module Statum
   class Hook
     # Creates new Hook instance
     #
-    # @param [Symbol|Proc|Lambda] hook Callable object or symbol that represents instance method
+    # @param [Symbol, Proc] hook Callable object or symbol that represents instance method
     def initialize(hook)
       @hook = hook
     end
@@ -23,6 +23,11 @@ module Statum
 
     private
 
+    # Finds hook on instance
+    #
+    # @param [Object] instance Instance of class that included Statum
+    #
+    # @return [Proc]
     def find_hook(instance)
       @hook.respond_to?(:call) ? @hook : instance.method(@hook)
     end

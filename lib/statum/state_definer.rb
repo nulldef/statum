@@ -6,6 +6,7 @@ module Statum
     # @param [Class] klass Class that includes Statum
     # @param [String|Symbol] field Field that will be used for storing current state
     # @param [Hash] options Hash options
+    # @option options [Symbol] initial Initial value
     def initialize(klass, field, options)
       @klass   = klass
       @field   = field.to_sym
@@ -16,7 +17,7 @@ module Statum
       state(@initial) unless @initial.nil?
     end
 
-    # Returns state maching
+    # Returns state machine
     #
     # @return [Statum::Machine]
     def state_machine
@@ -30,7 +31,7 @@ module Statum
 
     # Define a new state
     #
-    # @param [String|Symbol] name State name
+    # @param [Symbol] name State name
     def state(name)
       @states << name.to_sym unless @states.include?(name.to_sym)
     end

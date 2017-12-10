@@ -1,5 +1,9 @@
 module Statum
   # Class for representing event machine
+  #
+  # @attr_reader [Hash] events Events
+  # @attr_reader [Array<Symbol>] states States
+  # @attr_reader [Symbol] field State field
   class Machine
     attr_reader :events, :states, :field
 
@@ -9,6 +13,10 @@ module Statum
     # Creates machine instance
     #
     # @param [Hash] options options hash
+    # @option options [Symbol] field Field to store state
+    # @option options [Symbol] initial Initial state
+    # @option options [Array<Symbol>] states States
+    # @option options [Hash] events Events
     def initialize(options)
       @field   = options.delete(:field)
       @initial = options.delete(:initial)
@@ -18,7 +26,7 @@ module Statum
 
     # Checks if state present
     #
-    # @param [String|Symbol] name state name
+    # @param [Symbol] name state name
     #
     # @return [Boolean]
     def state?(name)
@@ -27,7 +35,7 @@ module Statum
 
     # Checks if event present
     #
-    # @param [String|Boolean] name event name
+    # @param [Symbol] name event name
     #
     # @return [Boolean]
     def event?(name)
@@ -37,7 +45,10 @@ module Statum
     # Execute an event
     #
     # @param [Object] instance Instance of class, that includes Statum
-    # @param [String|Symbol] name Event name
+    # @param [Symbol] name Event name
+    #
+    # @raise Statum::UnknownEventError
+    # @raise Statum::ErrorTransitionError
     def fire!(instance, name)
       raise Statum::UnknownEventError, "Event #{name} not found" unless event?(name)
 
